@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * ISO8601DateFormatterTest.java                                               *
+ * propertylistserialization Copyright (c) 2018; Electric Bolt Limited.        *
+ ******************************************************************************/
+
 package nz.co.electricbolt.propertylistserialization.internal;
 
 import android.support.test.runner.AndroidJUnit4;

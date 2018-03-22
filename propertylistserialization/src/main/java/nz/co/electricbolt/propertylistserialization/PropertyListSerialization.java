@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * PropertyListSerialization.java                                              *
+ * propertylistserialization Copyright (c) 2018; Electric Bolt Limited.        *
+ ******************************************************************************/
+
 package nz.co.electricbolt.propertylistserialization;
 
 import android.support.annotation.NonNull;

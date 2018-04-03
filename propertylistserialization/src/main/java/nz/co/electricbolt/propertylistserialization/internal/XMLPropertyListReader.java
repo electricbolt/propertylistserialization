@@ -127,7 +127,7 @@ public class XMLPropertyListReader {
             case "data":
                 return Base64.decode(readString("data"), Base64.DEFAULT);
             case "date":
-                return ISO8601DateFormatter.parse(readString("date"));
+                return DateUtil.parseXML(readString("date"));
             case "integer":
                 return Integer.valueOf(readString("integer"));
             case "real":

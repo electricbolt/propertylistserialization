@@ -101,7 +101,7 @@ public class XMLPropertyListWriter {
             writeData((byte[]) obj, indent);
         } else if (obj instanceof Date) {
             Date value = (Date) obj;
-            write("<date>" + ISO8601DateFormatter.format(value) + "</date>\n", indent);
+            write("<date>" + DateUtil.formatXML(value) + "</date>\n", indent);
         } else if (obj instanceof Boolean) {
             Boolean value = (Boolean) obj;
             if (value)

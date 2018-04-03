@@ -121,7 +121,7 @@ public class XMLPropertyListWriterTest {
                 "</plist>\n";
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        XMLPropertyListWriter p = new XMLPropertyListWriter(ISO8601DateFormatter.parse("2018-03-17T15:53:00Z"), baos);
+        XMLPropertyListWriter p = new XMLPropertyListWriter(DateUtil.parseXML("2018-03-17T15:53:00Z"), baos);
         p.write();
         String result = baos.toString("utf8");
         assertEquals(template, result);

@@ -444,7 +444,7 @@ public class XMLPropertyListReaderTest {
         assertNotNull(obj);
         assertTrue(obj instanceof Date);
         Date d = (Date) obj;
-        assertEquals(d, ISO8601DateFormatter.parse("2018-03-17T15:53:00Z"));
+        assertEquals(d, DateUtil.parseXML("2018-03-17T15:53:00Z"));
     }
 
     // Data

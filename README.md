@@ -91,29 +91,44 @@ try {
 Map dict = (Map) list.get(0);
 boolean selected = dict.get("Selected"); // true
 String iconName = dict.get("IconName"); // "largeIcon.png"
-int iconSize = dict.get("IconSize"); // 32
+long iconSize = dict.get("IconSize"); // 32
 ```
 
 ## Data type conversions
 
-For both XML and Binary plist formats
+#### Serialization (Java -> plist)
 
-plist element | Objective C data type | java type
---------------|-----------------------|----------
-string | NSString | java.lang.String
-integer | NSNumber (integerValue) | java.lang.Integer \*3
-real | NSNumber (doubleValue) | java.lang.Double
-real | NSNumber (floatValue) | java.lang.Float \*4
-dict | NSDictionary | java.util.Map<String, Object>
-array | NSArray | java.util.List
-date | NSDate | java.util.Date
-true | NSNumber (boolValue) YES | Boolean.valueOf(true)
-false | NSNumber (boolValue) NO | Boolean.valueOf(false)
-data | NSData | byte[]
+Input Java type | Equivalent ObjC type | Output plist type
+----------------|----------------------|------------------
+java.lang.String | NSString | &lt;string&gt;
+java.lang.Integer | NSNumber (integerValue) | &lt;integer&gt; \*3
+java.lang.Long | NSNumber (longValue) | &lt;integer&gt;
+java.lang.Float | NSNumber (floatValue) | &lt;real&gt; \*4
+java.lang.Double | NSNumber (doubleValue) | &lt;real&gt;
+java.util.Map<String, Object> | NSDictionary| &lt;dict&gt;
+java.util.List | NSArray | &lt;array&gt;
+java.util.Date | NSDate | &lt;date&gt;
+Boolean.valueOf(true) | NSNumber (boolValue) YES | &lt;true&gt;
+Boolean.valueOf(false) | NSNumber (boolValue) NO | &lt;false&gt;
+byte[] | NSData | &lt;data&gt;
 
-\*3 32-bit values only.
+\*3 Serialization only, deserialization will always output java.lang.Long.
 
 \*4 Serialization only, deserialization will always output java.lang.Double.
+
+#### Deserialization (plist -> Java)
+
+Input plist type | Equivalent ObjC type | Output Java type
+-----------------|----------------------|-----------------
+&lt;string&gt; | NSString | java.lang.String
+&lt;integer&gt; | NSNumber (longValue) | java.lang.Long
+&lt;real&gt; | NSNumber (doubleValue) | java.lang.Double
+&lt;dict&gt; | NSDictionary | java.util.Map<String, Object>
+&lt;array&gt; | NSArray | java.util.List
+&lt;date&gt; | NSDate | java.util.Date
+&lt;true&gt; | NSNumber (boolValue) YES | Boolean.valueOf(true)
+&lt;false&gt; | NSNumber (boolValue) NO | Boolean.valueOf(false)
+&lt;data&gt; | NSData | byte[]
 
 ## Class PropertyListSerialization
 
@@ -127,7 +142,7 @@ For the object graph provided, returns a property list as byte\[\] (encoded usin
 
 Equivalent to iOS method `[NSPropertyList dataWithPropertyList:format:options:error]`
 
-**params** *obj* - The object graph to write out as a property list. The object graph may only contain the following types: String, Integer, Float, Double, Map<String, Object>, List, Date, Boolean or byte[].
+**params** *obj* - The object graph to write out as a property list. The object graph may only contain the following types: String, Integer, Long, Float, Double, Map<String, Object>, List, Date, Boolean or byte[].
 
 **params** *format* - Either Format.XML or Format.Binary
 
@@ -147,7 +162,7 @@ For the object graph provided, writes the property list (encoded using utf8 for 
 
 Equivalent to iOS method `[NSPropertyList writePropertyList:toStream:format:options:error]`
 
-**params** *obj* - The object graph to write out as a property list. The object graph may only contain the following types: String, Integer, Float, Double, Map<String, Object>, List, Date, Boolean or byte\[\].
+**params** *obj* - The object graph to write out as a property list. The object graph may only contain the following types: String, Integer, Long, Float, Double, Map<String, Object>, List, Date, Boolean or byte\[\].
 
 **params** *os* - The output stream to write the property list to.
 
@@ -171,7 +186,7 @@ Equivalent to iOS method `[NSPropertyList propertyListWithData:options:format:er
 
 **params** *format* - Either Format.XML or Format.Binary
 
-**returns** Returns one of String, Integer, Double, Map<String, Object>, List, Date, Boolean or byte\[\].
+**returns** Returns one of String, Long, Double, Map<String, Object>, List, Date, Boolean or byte\[\].
 
 **throws** *PropertyListReadStreamException* if the plist is corrupt, values could not be converted or the input stream is EOF.
 
@@ -191,6 +206,6 @@ Equivalent to iOS method `[NSPropertyList propertyListWithStream:options:format:
 
 **params** *format* - Either Format.XML or Format.Binary
 
-**returns** Returns one of String, Integer, Double, Map<String, Object>, List, Date, Boolean or byte\[\].
+**returns** Returns one of String, Long, Double, Map<String, Object>, List, Date, Boolean or byte\[\].
 
 **throws** *PropertyListReadStreamException* if the plist is corrupt, values could not be converted or the input stream is EOF.

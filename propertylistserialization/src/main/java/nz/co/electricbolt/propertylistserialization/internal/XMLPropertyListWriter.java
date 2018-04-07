@@ -18,6 +18,7 @@ import java.util.TreeMap;
 /** Property list elements are written as follows:
  * java.lang.String ->  string (NSString)
  * java.lang.Integer -> integer (NSInteger)
+ * java.lang.Long -> integer (NSInteger)
  * java.lang.Float -> real (float)
  * java.lang.Double -> real (double)
  * java.util.HashMap<String, Object> -> dict (NSDictionary)
@@ -97,6 +98,9 @@ public class XMLPropertyListWriter {
         } else if (obj instanceof Integer) {
             Integer value = (Integer) obj;
             write("<integer>" + value + "</integer>\n", indent);
+        } else if (obj instanceof Long) {
+            Long value = (Long) obj;
+            write("<integer>" + value + "</integer>\n", indent);
         } else if (obj instanceof byte[]) {
             writeData((byte[]) obj, indent);
         } else if (obj instanceof Date) {
@@ -108,9 +112,8 @@ public class XMLPropertyListWriter {
                 write("<true/>\n", indent);
             else
                 write("<false/>\n", indent);
-        } else {
+        } else
             throw new IllegalStateException("Incompatible object " + obj + " found");
-        }
     }
 
     private String escape(String s) {

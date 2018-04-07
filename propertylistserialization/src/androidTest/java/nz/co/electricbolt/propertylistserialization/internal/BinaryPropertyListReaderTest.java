@@ -70,7 +70,7 @@ public class BinaryPropertyListReaderTest {
         assertTrue(obj instanceof ArrayList);
         ArrayList<Object> list = (ArrayList<Object>) obj;
         assertEquals(list.size(), 10);
-        assertEquals(0, (int) list.get(0));
+        assertEquals(0, (long) list.get(0));
         assertEquals(1.5f, (float) list.get(1), 0.1);
         assertEquals(2.5d, (double) list.get(2), 0.1);
         assertTrue((boolean) list.get(3));
@@ -108,7 +108,7 @@ public class BinaryPropertyListReaderTest {
         assertTrue(obj instanceof Map);
         Map<String, Object> dict = (Map<String, Object>) obj;
         assertEquals(10, dict.size());
-        assertEquals(0, (int) dict.get("int"));
+        assertEquals(0, (long) dict.get("int"));
         assertEquals(1.5f, (float) dict.get("float"), 0.1);
         assertEquals(2.5d, (double) dict.get("double"), 0.1);
         assertTrue((boolean) dict.get("true"));
@@ -175,6 +175,9 @@ public class BinaryPropertyListReaderTest {
         testInteger(65536, "62706c6973743030120001000008000000000000010100000000000000010000000000000000000000000000000d");
         testInteger(2147483646, "62706c6973743030127ffffffe08000000000000010100000000000000010000000000000000000000000000000d");
         testInteger(2147483647, "62706c6973743030127fffffff08000000000000010100000000000000010000000000000000000000000000000d");
+        testInteger(2147483648L, "62706c6973743030128000000008000000000000010100000000000000010000000000000000000000000000000d");
+        testInteger(9223372036854775806L, "62706c6973743030137ffffffffffffffe080000000000000101000000000000000100000000000000000000000000000011");
+        testInteger(9223372036854775807L, "62706c6973743030137fffffffffffffff080000000000000101000000000000000100000000000000000000000000000011");
 
         // negative
         testInteger(-1, "62706c697374303013ffffffffffffffff080000000000000101000000000000000100000000000000000000000000000011");
@@ -192,16 +195,19 @@ public class BinaryPropertyListReaderTest {
         testInteger(-65536, "62706c697374303013ffffffffffff0000080000000000000101000000000000000100000000000000000000000000000011");
         testInteger(-2147483647, "62706c697374303013ffffffff80000001080000000000000101000000000000000100000000000000000000000000000011");
         testInteger(-2147483648, "62706c697374303013ffffffff80000000080000000000000101000000000000000100000000000000000000000000000011");
+        testInteger( -2147483649L, "62706c697374303013ffffffff7fffffff080000000000000101000000000000000100000000000000000000000000000011");
+        testInteger( -9223372036854775807L, "62706c6973743030138000000000000001080000000000000101000000000000000100000000000000000000000000000011");
+        testInteger( -9223372036854775808L, "62706c6973743030138000000000000000080000000000000101000000000000000100000000000000000000000000000011");
     }
 
-    private void testInteger(int value, String template) throws Exception {
+    private void testInteger(long value, String template) throws Exception {
         BinaryPropertyListReader p = new BinaryPropertyListReader(bytes(template));
         Object obj = p.parse();
 
         assertNotNull(obj);
-        assertTrue(obj instanceof Integer);
-        Integer i = (Integer) obj;
-        assertEquals(value, i.intValue());
+        assertTrue(obj instanceof Long);
+        Long l = (Long) obj;
+        assertEquals(value, l.longValue());
     }
 
     // Real

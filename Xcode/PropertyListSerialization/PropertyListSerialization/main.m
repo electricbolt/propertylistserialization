@@ -3,7 +3,7 @@
  * propertylistserialization Copyright (c) 2018; Electric Bolt Limited.        *
  ******************************************************************************/
 
-// Run in iOS Simulator - outputs to the console hex encoded binary plists.
+// Run in 64-bit iOS Simulator - outputs to the console hex encoded binary plists.
 // These hex encoded binary plists are used verbatim as 'xcodeTemplate's in
 // the Android test classes BinaryPropertyListReaderTest and
 // BinaryPropertyListWriterTest.
@@ -66,6 +66,9 @@ static void outputReaderTestData(void) {
     output(@"Integer 65536", [NSNumber numberWithInteger: 65536]);
     output(@"Integer 2147483646", [NSNumber numberWithInteger: 2147483646]);
     output(@"Integer 2147483647", [NSNumber numberWithInteger: 2147483647]);
+    output(@"Integer 2147483648", [NSNumber numberWithInteger: 2147483648L]); // 64-bit
+    output(@"Integer 9223372036854775806", [NSNumber numberWithInteger: 9223372036854775806L]);
+    output(@"Integer 9223372036854775807", [NSNumber numberWithInteger: 9223372036854775807L]);
 
     // negative integers
     output(@"Integer -1", [NSNumber numberWithInteger: -1]);
@@ -83,6 +86,9 @@ static void outputReaderTestData(void) {
     output(@"Integer -65536", [NSNumber numberWithInteger: -65536]);
     output(@"Integer -2147483647", [NSNumber numberWithInteger: -2147483647]);
     output(@"Integer -2147483648", [NSNumber numberWithInteger: -2147483648]);
+    output(@"Integer -2147483649", [NSNumber numberWithInteger: -2147483649L]); // 64-bit
+    output(@"Integer -9223372036854775807", [NSNumber numberWithInteger: -9223372036854775807L]);
+    output(@"Integer -9223372036854775808", [NSNumber numberWithInteger: LONG_MIN]); // hardcoding -9223372036854775808 causes compiler to issue faulty warning
 
     // real (float)
     output(@"Float 0.0", [NSNumber numberWithFloat: 0.0]);

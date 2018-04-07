@@ -22,6 +22,7 @@ import java.util.Set;
  * Property list elements are written as follows:
  * java.lang.String ->  string (NSString)
  * java.lang.Integer -> integer (NSInteger)
+ * java.lang.Long -> integer (NSInteger)
  * java.lang.Float -> real (float)
  * java.lang.Double -> real (double)
  * java.util.HashMap<String, Object> -> dict (NSDictionary)
@@ -106,8 +107,12 @@ public class BinaryPropertyListWriter {
             } else if (obj instanceof Double) {
                 os.write(0x23);
                 writeLong(Double.doubleToRawLongBits((double) obj), 8);
-            } else if (obj instanceof Integer) {
-                long value = ((Integer) obj).longValue();
+            } else if (obj instanceof Integer || obj instanceof Long) {
+                long value;
+                if (obj instanceof Integer)
+                    value = (Integer) obj;
+                else
+                    value = (Long) obj;
                 if (value < 0) {
                     // All negative integers are stored as long
                     os.write(0x13);
@@ -120,10 +125,14 @@ public class BinaryPropertyListWriter {
                     // short
                     os.write(0x11);
                     writeLong(value, 2);
-                } else {
+                } else if (value < 4294967296L){
                     // int
                     os.write(0x12);
                     writeLong(value, 4);
+                } else {
+                    // long
+                    os.write(0x13);
+                    writeLong(value, 8);
                 }
             } else if (obj instanceof Date) {
                 os.write(0x33);
@@ -181,8 +190,8 @@ public class BinaryPropertyListWriter {
             for (int i = 0; i < list.size(); i++)
                 mapObject(list.get(i));
         } else if (obj instanceof String || obj instanceof Float || obj instanceof Double ||
-                obj instanceof Integer || obj instanceof byte[] || obj instanceof Date ||
-                obj instanceof Boolean) {
+                obj instanceof Integer || obj instanceof Long || obj instanceof byte[] ||
+                obj instanceof Date || obj instanceof Boolean) {
             // do nothing.
         } else
             throw new IllegalStateException("Incompatible object " + obj + " found");

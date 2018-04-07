@@ -23,7 +23,7 @@ import java.util.HashMap;
  *
  * Property list elements are parsed as follows:
  * string (NSString) -> java.lang.String
- * integer (NSInteger) -> java.lang.Integer
+ * integer (NSInteger) -> java.lang.Long
  * real (double) -> java.lang.Double
  * dict (NSDictionary) -> java.util.HashMap<String, Object>
  * array (NSArray) -> java.util.ArrayList
@@ -129,7 +129,7 @@ public class XMLPropertyListReader {
             case "date":
                 return DateUtil.parseXML(readString("date"));
             case "integer":
-                return Integer.valueOf(readString("integer"));
+                return Long.valueOf(readString("integer"));
             case "real":
                 return Double.valueOf(readString("real"));
             case "true": {

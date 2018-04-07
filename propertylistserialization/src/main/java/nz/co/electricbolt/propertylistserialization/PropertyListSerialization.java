@@ -33,7 +33,7 @@ public class PropertyListSerialization {
      * Equivalent to iOS method `[NSPropertyList dataWithPropertyList:format:options:error]`
      *
      * @param obj    The object graph to write out as a property list. The object graph may only
-     *               contain the following types: String, Integer, Float, Double, Map<String, Object>,
+     *               contain the following types: String, Integer, Long, Float, Double, Map<String, Object>,
      *               List, Date, Boolean or byte[]
      * @param format The format of the property list. Specify either XML or Binary.
      * @return byte[] of the property list.
@@ -65,7 +65,7 @@ public class PropertyListSerialization {
      * Equivalent to iOS method `[NSPropertyList writePropertyList:toStream:format:options:error]`
      *
      * @param obj    The object graph to write out as a property list. The object graph may only
-     *               contain the following types: String, Integer, Float, Double, Map<String, Object>,
+     *               contain the following types: String, Integer, Long, Float, Double, Map<String, Object>,
      *               List, Date, Boolean or byte[]
      * @param format The format of the property list. Specify either XML or Binary.
      * @param os     The output stream to write the property list to.
@@ -103,7 +103,7 @@ public class PropertyListSerialization {
      *
      * @param data   byte[] of plist
      * @param format The format of the property list. Specify either XML or Binary.
-     * @return Returns one of String, Integer, Double, HashMap<String, Object>, ArrayList, Date,
+     * @return Returns one of String, Long, Double, HashMap<String, Object>, ArrayList, Date,
      * Boolean or byte[].
      * @throws PropertyListReadStreamException if the plist is corrupt, values could not be
      *                                         converted or the input stream is EOF.
@@ -136,7 +136,7 @@ public class PropertyListSerialization {
      *
      * @param is     InputStream containing the plist
      * @param format The format of the property list. Specify either XML or Binary.
-     * @return Returns one of String, Integer, Double, hMap<String, Object>, List, Date, Boolean
+     * @return Returns one of String, Long, Double, hMap<String, Object>, List, Date, Boolean
      * or byte[].
      * @throws PropertyListReadStreamException if the plist is corrupt, values could not be
      *                                         converted or the input stream is EOF.

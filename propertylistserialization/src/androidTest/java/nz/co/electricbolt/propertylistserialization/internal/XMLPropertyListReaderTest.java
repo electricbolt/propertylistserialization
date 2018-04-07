@@ -106,7 +106,7 @@ public class XMLPropertyListReaderTest {
         assertEquals(list.get(0), "abc");
         assertEquals(list.get(1), "");
         assertEquals(list.get(2), "");
-        assertEquals(list.get(3), 1);
+        assertEquals(list.get(3), 1L);
         assertEquals(list.get(4), (double) 1.0d);
         assertEquals(list.get(5), true);
         assertEquals(list.get(6), false);
@@ -227,7 +227,7 @@ public class XMLPropertyListReaderTest {
 
         assertEquals(new String((byte[]) dict.get("Data")), "String5");
 
-        assertEquals(dict.get("Integer"), 1);
+        assertEquals(dict.get("Integer"), 1L);
 
         assertEquals(dict.get("Real"), 1.0d);
 
@@ -326,9 +326,9 @@ public class XMLPropertyListReaderTest {
         Object obj = p.parse();
 
         assertNotNull(obj);
-        assertTrue(obj instanceof Integer);
-        Integer i = (Integer) obj;
-        assertEquals(i, Integer.valueOf(1));
+        assertTrue(obj instanceof Long);
+        Long l = (Long) obj;
+        assertEquals(l, Long.valueOf(1));
     }
 
     // Real

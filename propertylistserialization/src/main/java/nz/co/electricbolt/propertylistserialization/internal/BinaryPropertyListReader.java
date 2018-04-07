@@ -23,7 +23,7 @@ import java.util.Map;
  * <p>
  * Property list elements are parsed as follows:
  * string (NSString) -> java.lang.String
- * integer (NSInteger) -> java.lang.Integer
+ * integer (NSInteger) -> java.lang.Long
  * real (double) -> java.lang.Double
  * dict (NSDictionary) -> java.util.HashMap<String, Object>
  * array (NSArray) -> java.util.ArrayList
@@ -32,7 +32,6 @@ import java.util.Map;
  * false (BOOL) -> Boolean.valueOf(false)
  * data (NSData) -> byte[]
  * <p>
- * NSSet and null objects are not supported.
  */
 
 
@@ -60,9 +59,8 @@ public class BinaryPropertyListReader {
 
         // Offset table
         offsetTable = new int[numObjects];
-        for (int i = 0; i < numObjects; i++) {
+        for (int i = 0; i < numObjects; i++)
             offsetTable[i] = (int) readLong((offsetIntSize * i) + offsetTableOffset, offsetIntSize);
-        }
 
         return readObject(rootObjectId);
     }
@@ -75,16 +73,16 @@ public class BinaryPropertyListReader {
             case 0x0: {
                 switch (objectInfo) {
                     case 0x8: // boolean false
-                        return new Boolean(false);
+                        return false;
                     case 0x9: // boolean true
-                        return new Boolean(true);
+                        return true;
                     default:
                         throw new UnsupportedOperationException("Unsupported objectInfo " + objectInfo);
                 }
             }
             case 0x1: {
                 // integer
-                return (int) readLong(offset + 1, (int) Math.pow(2, objectInfo));
+                return (long) readLong(offset + 1, (int) Math.pow(2, objectInfo));
             }
             case 0x2: {
                 // real
@@ -150,14 +148,6 @@ public class BinaryPropertyListReader {
         return (byte) readLong(offset, 1);
     }
 
-    private short readShort(int offset) {
-        return (short) readLong(offset, 2);
-    }
-
-    private int readInt(int offset) {
-        return (int) readLong(offset, 4);
-    }
-
     private long readLong(int offset) {
         return (long) readLong(offset, 8);
     }
@@ -175,7 +165,6 @@ public class BinaryPropertyListReader {
             value <<= 8;
             value |= (buf[offset + i] & 0xFF);
         }
-        //value &= 0xFFFFFFFFL;
         return value;
     }
 

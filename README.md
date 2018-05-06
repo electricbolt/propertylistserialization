@@ -20,10 +20,17 @@
 ## Distribution
 
 * Minimum SDK 15 (4.0.3 Ice cream sandwich)
-* Target SDK 26
+* Target SDK 27
 * Full instrumented test suite
 * Developed with Android Studio 3.1
 * Friendly BSD-2 license
+* Hosted on JCenter
+
+## JCenter
+
+`propertylistserialization` is hosted in JCenter. In the `dependencies` section of your modules `build.gradle` file add the following:
+
+`implementation "nz.co.electricbolt:propertylistserialization:1.0.1"`
 
 ## Building instructions
 

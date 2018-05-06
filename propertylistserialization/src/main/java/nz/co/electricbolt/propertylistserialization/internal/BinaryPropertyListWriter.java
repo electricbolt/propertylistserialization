@@ -20,17 +20,19 @@ import java.util.Set;
 
 /**
  * Property list elements are written as follows:
- * java.lang.String ->  string (NSString)
- * java.lang.Integer -> integer (NSInteger)
- * java.lang.Long -> integer (NSInteger)
- * java.lang.Float -> real (float)
- * java.lang.Double -> real (double)
- * java.util.HashMap<String, Object> -> dict (NSDictionary)
- * java.util.ArrayList -> array (NSArray)
- * java.util.Date -> date (NSDate)
- * Boolean.valueOf(true) -> true (BOOL)
- * Boolean.valueOf(false) -> false (BOOL)
- * byte[] -> data (NSData)
+ * <p>
+ * java.lang.String -&gt;  string (NSString)
+ * java.lang.Integer -&gt; integer (NSInteger)
+ * java.lang.Long -&gt; integer (NSInteger)
+ * java.lang.Float -&gt; real (float)
+ * java.lang.Double -&gt; real (double)
+ * java.util.HashMap&lt;String, Object&gt; -&gt; dict (NSDictionary)
+ * java.util.ArrayList -&gt; array (NSArray)
+ * java.util.Date -&gt; date (NSDate)
+ * Boolean.valueOf(true) -&gt; true (BOOL)
+ * Boolean.valueOf(false) -&gt; false (BOOL)
+ * byte[] -&gt; data (NSData)
+ * </p>
  */
 
 public class BinaryPropertyListWriter {

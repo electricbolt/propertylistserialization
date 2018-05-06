@@ -22,16 +22,16 @@ import java.util.Map;
  * Implements a subset of Apple property list (plist) parser - binary format version "bplist00" only.
  * <p>
  * Property list elements are parsed as follows:
- * string (NSString) -> java.lang.String
- * integer (NSInteger) -> java.lang.Long
- * real (double) -> java.lang.Double
- * dict (NSDictionary) -> java.util.HashMap<String, Object>
- * array (NSArray) -> java.util.ArrayList
- * date (NSDate) -> java.util.Date
- * true (BOOL) -> Boolean.valueOf(true)
- * false (BOOL) -> Boolean.valueOf(false)
- * data (NSData) -> byte[]
- * <p>
+ * string (NSString) -&gt; java.lang.String
+ * integer (NSInteger) -&gt; java.lang.Long
+ * real (double) -&gt; java.lang.Double
+ * dict (NSDictionary) -&gt; java.util.HashMap&lt;String, Object&gt;
+ * array (NSArray) -&gt; java.util.ArrayList
+ * date (NSDate) -&gt; java.util.Date
+ * true (BOOL) -&gt; Boolean.valueOf(true)
+ * false (BOOL) -&gt; Boolean.valueOf(false)
+ * data (NSData) -&gt; byte[]
+ * </p>
  */
 
 
